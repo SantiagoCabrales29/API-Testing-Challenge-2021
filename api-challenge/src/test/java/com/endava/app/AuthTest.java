@@ -26,10 +26,22 @@ public class AuthTest {
 	}
 
 	@Test
-	public void getToken(){
+	public void getToken() {
 		String token = api.getToken();
 		Assert.assertNotNull(token);
-		props.setProperty("token",token);
+		props.setProperty("token", token);
 		System.out.println(props.getProperty("token"));
 	}
-}// Token para mañana -> 7dcf8d06748b6d9645746454a46712d2a1da9fd3
+
+	/*
+	@Test
+	public void getSessionToken(){
+		String token = props.getProperty("token");
+		String sessionId = api.getSessionId(token);
+		Assert.assertNotNull(sessionId);
+		props.setProperty("session_id",sessionId);
+		System.out.println(props.getProperty("session_id"));
+
+	}
+	 */
+}

@@ -8,6 +8,7 @@ import io.restassured.specification.RequestSpecification;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Properties;
 
 import static io.restassured.RestAssured.given;
@@ -37,5 +38,9 @@ public class HttpMessageSender {
 
 	public Response sendGetRequest(String endpoint){
 		return given().spec(requestSpecification).log().all().when().get(this.url+endpoint).andReturn();
+	}
+
+	public Response sendPostRequest(String endpoint, HashMap<String, String> body) {
+		return given().spec(requestSpecification).log().all().body(body).when().post(this.url+endpoint).andReturn();
 	}
 }
