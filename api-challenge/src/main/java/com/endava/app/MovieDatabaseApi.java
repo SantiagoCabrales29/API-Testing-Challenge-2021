@@ -47,4 +47,10 @@ public class MovieDatabaseApi {
 		ListDetails listDetails = new Gson().fromJson(jsonResponse,ListDetails.class);
 		return listDetails;
 	}
+
+	public Response addMovieToList(int movieId, int listId) {
+		HashMap<String,Integer> body =  new HashMap();
+		body.put("media_id", movieId);
+		return sender.sendPostRequest(MovieDatabaseEndpoints.addMovieToList(listId),body);
+	}
 }

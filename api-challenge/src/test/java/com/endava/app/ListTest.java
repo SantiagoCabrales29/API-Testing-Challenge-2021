@@ -43,6 +43,16 @@ public class ListTest {
 		System.out.println(listDetails.getName());
 	}
 
+	@Test
+	public void addMovieToList(){
+		int listId = 7077662;
+		int movieId = 577922;
+		Response response = api.addMovieToList(movieId, listId);
+		Assert.assertEquals(201,response.getStatusCode());
+		ListDetails listDetails = api.getList(listId);
+		//System.out.println(listDetails.getItems().get(0).getTitle());
+		Assert.assertNotNull(listDetails.getItems().get(0).getTitle());
+	}
 
 }
 
