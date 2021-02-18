@@ -17,7 +17,7 @@ public class HttpMessageSender {
 	private final String url;
 	private static RequestSpecification requestSpecification;
 	private static Properties props;
-
+	private static RequestSpecification requestSpecificationWithSessionId;
 	public HttpMessageSender(String url) {
 		props = new Properties();
 		try {
@@ -34,6 +34,11 @@ public class HttpMessageSender {
 				setContentType(ContentType.JSON).
 				addQueryParam("api_key",props.getProperty("key")).
 				build();
+		requestSpecificationWithSessionId = new RequestSpecBuilder().
+					setContentType(ContentType.JSON).
+					addQueryParam("api_key",props.getProperty("key")).
+					addQueryParam("session_id",props.getProperty("session_id")).
+					build();
 	}
 
 	public Response sendGetRequest(String endpoint){
@@ -42,5 +47,8 @@ public class HttpMessageSender {
 
 	public Response sendPostRequest(String endpoint, HashMap<String, String> body) {
 		return given().spec(requestSpecification).log().all().body(body).when().post(this.url+endpoint).andReturn();
+	}
+	public Response sendPostRequest(String endpoint, Object body) {
+		return given().spec(requestSpecificationWithSessionId).log().all().body(body).when().post(this.url+endpoint).andReturn();
 	}
 }

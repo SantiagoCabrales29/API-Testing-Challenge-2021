@@ -1,7 +1,12 @@
 package com.endava.app;
 
+import com.endava.app.entities.ListDetails;
+import com.endava.app.entities.MovieDatabaseList;
 import com.endava.app.helpers.MovieDatabaseEndpoints;
 import com.endava.app.http.HttpMessageSender;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
@@ -10,6 +15,7 @@ public class MovieDatabaseApi {
 
 	private final String url;
 	private final HttpMessageSender sender;
+	private JsonParser parser = new JsonParser();
 
 	public MovieDatabaseApi(String url) {
 		this.url = url;
@@ -26,5 +32,19 @@ public class MovieDatabaseApi {
 		body.put("request_token", token);
 		Response response = sender.sendPostRequest(MovieDatabaseEndpoints.createSessionId, body);
 		return response.then().log().all().extract().path("session_id");
+	}
+
+	public Response createList(MovieDatabaseList list) {
+		Response response = sender.sendPostRequest(MovieDatabaseEndpoints.list,list);
+		int id = response.then().extract().path("list_id");
+		list.setList_id(id);
+		return response;
+	}
+
+	public ListDetails getList(int index) {
+		Response response = sender.sendGetRequest(MovieDatabaseEndpoints.getList(index));
+		JsonElement jsonResponse = parser.parse(response.body().asString());
+		ListDetails listDetails = new Gson().fromJson(jsonResponse,ListDetails.class);
+		return listDetails;
 	}
 }
