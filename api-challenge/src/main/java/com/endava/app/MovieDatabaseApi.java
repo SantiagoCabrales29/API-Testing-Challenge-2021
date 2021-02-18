@@ -61,4 +61,11 @@ public class MovieDatabaseApi {
 		MovieDetails movieDetails = new Gson().fromJson(jsonResponse,MovieDetails.class);
 		return movieDetails;
 	}
+
+	public Response rateMovie(int idMovie, double value) {
+		HashMap<String,Double> body = new HashMap<>();
+		body.put("value",value);
+		return sender.sendPostRequest(MovieDatabaseEndpoints.rateMovie(idMovie),body);
+
+	}
 }

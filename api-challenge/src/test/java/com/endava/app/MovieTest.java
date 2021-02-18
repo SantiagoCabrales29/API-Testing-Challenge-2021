@@ -1,6 +1,7 @@
 package com.endava.app;
 
 import com.endava.app.entities.MovieDetails;
+import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,5 +32,12 @@ public class MovieTest {
 		MovieDetails movieDetails = api.getMovieDetails(idMovie);
 		Assert.assertNotNull(movieDetails);
 		System.out.println(movieDetails.getTitle());
+	}
+
+	@Test
+	public void rateMovie(){
+		int idMovie = 12445;
+		Response response = api.rateMovie(idMovie,8.5);
+		Assert.assertEquals(201, response.getStatusCode());
 	}
 }
