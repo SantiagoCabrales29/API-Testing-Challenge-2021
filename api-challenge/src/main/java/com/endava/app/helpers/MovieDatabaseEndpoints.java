@@ -10,6 +10,7 @@ public class MovieDatabaseEndpoints {
 	public static final String rateMovie = "movie/%s/rating";
 	public static final String rateTvShow = "tv/%s/rating";
 	public static final String rateTvEpisode = "/tv/%s/season/%t/episode/%u";
+	public static final String getMovieDetails = "movie/%s";
 
 	public static String addMovieToList(int id){
 		return String.format(addMovieToList, id);
@@ -30,5 +31,7 @@ public class MovieDatabaseEndpoints {
 	public static String rateTvShow(int id){
 		return String.format(rateTvShow, id);
 	}
+
+	public static String getMovie(int id){ return String.format(getMovieDetails,id);}
 
 }

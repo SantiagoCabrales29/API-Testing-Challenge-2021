@@ -2,6 +2,7 @@ package com.endava.app;
 
 import com.endava.app.entities.ListDetails;
 import com.endava.app.entities.MovieDatabaseList;
+import com.endava.app.entities.MovieDetails;
 import com.endava.app.helpers.MovieDatabaseEndpoints;
 import com.endava.app.http.HttpMessageSender;
 import com.google.gson.Gson;
@@ -52,5 +53,12 @@ public class MovieDatabaseApi {
 		HashMap<String,Integer> body =  new HashMap();
 		body.put("media_id", movieId);
 		return sender.sendPostRequest(MovieDatabaseEndpoints.addMovieToList(listId),body);
+	}
+
+	public MovieDetails getMovieDetails(int idMovie) {
+		Response response = sender.sendGetRequest(MovieDatabaseEndpoints.getMovie(idMovie));
+		JsonElement jsonResponse = parser.parse(response.body().asString());
+		MovieDetails movieDetails = new Gson().fromJson(jsonResponse,MovieDetails.class);
+		return movieDetails;
 	}
 }
