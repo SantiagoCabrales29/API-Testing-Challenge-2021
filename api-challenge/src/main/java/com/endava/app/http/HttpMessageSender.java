@@ -51,4 +51,8 @@ public class HttpMessageSender {
 	public Response sendPostRequest(String endpoint, Object body) {
 		return given().spec(requestSpecificationWithSessionId).log().all().body(body).when().post(this.url+endpoint).andReturn();
 	}
+
+	public Response clearList(String endpoint) {
+		return given().spec(requestSpecificationWithSessionId).queryParams("confirm",true).log().all().when().post(this.url+endpoint).andReturn();
+	}
 }

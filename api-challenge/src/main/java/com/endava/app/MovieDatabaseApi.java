@@ -68,4 +68,8 @@ public class MovieDatabaseApi {
 		return sender.sendPostRequest(MovieDatabaseEndpoints.rateMovie(idMovie),body);
 
 	}
+
+	public Response clearList(int listId) {
+		return sender.clearList(MovieDatabaseEndpoints.clearList(listId));
+	}
 }
